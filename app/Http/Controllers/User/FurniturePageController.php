@@ -7,6 +7,10 @@ use App\Models\Furniture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use App\Models\User;
+use App\Models\Image;
+
 
 class FurniturePageController extends Controller
 {
@@ -51,6 +55,8 @@ class FurniturePageController extends Controller
         'description' => $validated['description'] ?? null,
         'stock' => $validated['stock'],
         'price' => $validated['price'],
+                'user_id' => auth()->id() // Add this line
+
     ]);
 
     // ثم أضف الصورة باستخدام العلاقة polymorphic
@@ -79,6 +85,12 @@ class FurniturePageController extends Controller
             'item' => $furniture
         ]);
     }
+    public function myFurniture()
+{
+    $furnitures = auth()->user()->furnitures()->paginate(10);
+    // $furniture = Furniture::all();
+    return view('user.furniture.myfurniture', compact('furnitures'));
+}
 
     /**
      * Show the form for editing the specified furniture item.
@@ -88,7 +100,7 @@ class FurniturePageController extends Controller
         $furniture = Furniture::findOrFail($id);
 
         return view('user.furniture.edit', [
-            'item' => $furniture
+            'furniture' => $furniture
         ]);
     }
 

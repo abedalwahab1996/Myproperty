@@ -15,7 +15,11 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->decimal('price', 10, 2);
             $table->boolean('is_deleted')->default(false);
+            $table->unsignedBigInteger('user_id'); // Add this line
+
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 

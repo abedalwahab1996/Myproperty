@@ -17,12 +17,12 @@ public function index()
                     ->latest() // Order by newest first
                     ->paginate(10); // Paginate results
 
-    return view('user.property.index', compact('properties'));
+    return view('user.Property.index', compact('properties'));
 }
 
     public function create()
     {
-        return view('user.property.create');
+        return view('user.Property.create');
     }
 
     public function store(Request $request)
@@ -50,7 +50,7 @@ public function index()
             ]);
         }
 
-        return redirect()->route('user.property.index')
+        return redirect()->route('user.Property.index')
             ->with('success', 'Property created successfully.');
     }
 public function update(Request $request, Property $property)
@@ -87,7 +87,7 @@ public function update(Request $request, Property $property)
         ]);
     }
 
-    return redirect()->route('user.property.index')->with('success', 'Property updated successfully.');
+    return redirect()->route('user.Property.index')->with('success', 'Property updated successfully.');
 }
 
  public function show(Property $property)
@@ -96,12 +96,12 @@ public function update(Request $request, Property $property)
                     ->latest() // Order by newest first
                     ->paginate(10); // Paginate results
 
-    return view('user.property.show', compact('properties'));
+    return view('user.Property.show', compact('properties'));
 }
 
 public function edit(Property $property)
 {
-    return view('user.property.edit', compact('property'));
+    return view('user.Property.edit', compact('property'));
 }
 
   public function destroy(Property $property)

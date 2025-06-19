@@ -92,7 +92,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item py-2" href="user.furniture.show">
+                                <a class="dropdown-item py-2" href="{{ route('user.furniture.myfurniture') }}">
                                     <i class="fas fa-couch me-2 text-info"></i> My Furniture
                                 </a>
                             </li>

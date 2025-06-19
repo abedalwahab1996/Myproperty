@@ -9,10 +9,10 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->is_admin) {
+        if (auth()->check() && auth()->user()->isAdmin()) {
             return $next($request);
         }
 
-        abort(403); // أو redirect()->route('home')
+        return redirect('/')->with('error', 'You do not have admin access');
     }
 }

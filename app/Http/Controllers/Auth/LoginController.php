@@ -14,11 +14,8 @@ class LoginController extends Controller
      * Where to redirect users after login by default.
      * @var string
      */
-    protected $redirectTo = 'home';
+    protected $redirectTo = '/'; // Default path for regular users
 
-    /**
-     * Create a new controller instance.
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
@@ -27,14 +24,23 @@ class LoginController extends Controller
     /**
      * Handle post-authentication redirect.
      */
-protected function authenticated(Request $request, $user)
-{
-    if ($user->is_admin) {
-        return redirect()->route('admin.users.index');
-    }
+   protected function authenticated(Request $request, $user)
+        {
+            // Add logging to debug the issue
+            \Log::info('Login redirect', [
+                'user_id' => $user->id,
+                'role' => $user->role,
+                'isAdmin' => $user->isAdmin(),
+                'route' => $user->role === 'admin' ? 'admin.users.index' : 'user.Property.index'
+            ]);
 
-    return redirect()->route('user.property.index'); // أو أي مسار للمستخدم العادي
-}
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.users.index');
+            }
+
+            return redirect()->route('user.Property.index');
+        }
+
     public function logout(Request $request)
     {
         $this->guard()->logout();
@@ -43,5 +49,4 @@ protected function authenticated(Request $request, $user)
 
         return redirect('/');
     }
-
 }

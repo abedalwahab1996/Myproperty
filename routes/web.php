@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\FurniturePanelController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +26,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/admin/users/index', [UserPanelController::class, 'index'])->name('admin.users.index');
 // routes/web.php
 Route::delete('/admin/users/index', [UserPanelController::class, 'index'])->name('admin.users.index');
@@ -68,11 +69,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function() {
 });
 
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
-    Route::get('/properties', [MyPropertyController::class, 'index'])->name('property.index');
-            Route::get('/properties/{property}/edit', action: [MyPropertyController::class, 'edit'])->name('user.property.edit');
-Route::get('/user/property/{property}', [MyPropertyController::class, 'show'])
-    ->name('user.property.show');
-        Route::resource('property', MyPropertyController::class);
+    Route::get('/properties', [MyPropertyController::class, 'index'])->name('Property.index');
+    Route::get('/properties/{property}/edit', action: [MyPropertyController::class, 'edit'])->name('user.Property.edit');
+    Route::get('/user/property/{property}', [MyPropertyController::class, 'show'])
+        ->name('user.Property.show');
+    Route::resource('property', MyPropertyController::class);
 
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::resource('properties', MyPropertyController::class)->except(['destroy']); // or ->only(['index', 'show', 'create', 'store', 'edit', 'update'])
@@ -90,6 +91,7 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     // Furniture resource routes
     Route::prefix('furniture')->name('furniture.')->group(function () {
+        Route::get('/furnitures', [FurniturePageController::class, 'myFurniture'])->name('myfurniture');
         Route::get('/', [FurniturePageController::class, 'index'])->name('index');
         Route::get('/create', [FurniturePageController::class, 'create'])->name('create');
         Route::post('/', [FurniturePageController::class, 'store'])->name('store');
