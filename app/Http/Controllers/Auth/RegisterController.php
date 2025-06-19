@@ -12,7 +12,7 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     // Redirect to login page after registration
-    protected $redirectTo = '/login';
+    protected $redirectTo = '/login ';
 
     public function __construct()
     {
